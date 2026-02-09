@@ -1,0 +1,38 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.28"
+
+# Remappings for OpenZeppelin
+remappings = [
+    "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/"
+]
+
+# Exclude OZ certora harnesses (missing patched files)
+exclude_paths = ["lib/openzeppelin-contracts-upgradeable/certora", "lib/openzeppelin-contracts-upgradeable/test"]
+
+# Optimizer settings
+optimizer = true
+optimizer_runs = 1
+via_ir = true
+
+# EVM version (Base supports Cancun for mcopy)
+evm_version = "cancun"
+
+# Testing
+fuzz = { runs = 256 }
+
+[profile.ci]
+fuzz = { runs = 1000 }
+
+# Base Sepolia Network Configuration
+[rpc_endpoints]
+base_sepolia = "https://sepolia.base.org"
+base_mainnet = "https://mainnet.base.org"
+
+[etherscan]
+base_sepolia = { key = "${BASESCAN_API_KEY}", url = "https://api-sepolia.basescan.org/api" }
+base_mainnet = { key = "${BASESCAN_API_KEY}", url = "https://api.basescan.org/api" }
